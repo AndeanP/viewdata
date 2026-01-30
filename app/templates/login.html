@@ -1,16 +1,25 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="transition-colors duration-300">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login - ViewData</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+        }
+    </script>
     <style>
         body {
             background-image: url('https://images.unsplash.com/photo-1557683316-973673baf926?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80');
             background-size: cover;
             background-position: center;
+        }
+
+        .dark body {
+            background-image: url('https://images.unsplash.com/photo-1519681393784-d120267933ba?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80');
         }
 
         .glass {
@@ -21,14 +30,29 @@
             border-radius: 10px;
             border: 1px solid rgba(255, 255, 255, 0.18);
         }
+
+        /* Dark mode overrides for glass if needed, but the transparent white works on dark backgrounds too. 
+           Let's make it slightly darker in dark mode. */
+        .glass.dark-glass {
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
     </style>
+    <script>
+        // Init Theme
+        if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
+    </script>
 </head>
 
 <body class="h-screen flex items-center justify-center">
     <!-- Overlay for better text readability -->
-    <div class="absolute inset-0 bg-black opacity-30"></div>
+    <div class="absolute inset-0 bg-black opacity-30 dark:opacity-60"></div>
 
-    <div
+    <div id="login-card"
         class="glass p-10 rounded-xl shadow-2xl w-96 transform transition-all hover:scale-105 duration-300 relative z-10">
         <div class="text-center mb-8">
             <h1 class="text-4xl font-extrabold text-white tracking-wide">ViewData</h1>
@@ -66,6 +90,13 @@
             </div>
         </form>
     </div>
+
+    <script>
+        // Apply dark glass effect if dark mode is active
+        if (document.documentElement.classList.contains('dark')) {
+            document.getElementById('login-card').classList.add('dark-glass');
+        }
+    </script>
 </body>
 
 </html>
