@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - ViewData</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            background-image: url('https://images.unsplash.com/photo-1557683316-973673baf926?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80');
+            background-size: cover;
+            background-position: center;
+        }
+
+        .glass {
+            background: rgba(255, 255, 255, 0.25);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.18);
+        }
+    </style>
+</head>
+
+<body class="h-screen flex items-center justify-center">
+    <!-- Overlay for better text readability -->
+    <div class="absolute inset-0 bg-black opacity-30"></div>
+
+    <div
+        class="glass p-10 rounded-xl shadow-2xl w-96 transform transition-all hover:scale-105 duration-300 relative z-10">
+        <div class="text-center mb-8">
+            <h1 class="text-4xl font-extrabold text-white tracking-wide">ViewData</h1>
+            <p class="text-gray-200 mt-2 text-sm">Access your analytics dashboard</p>
+        </div>
+
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        {% for message in messages %}
+        <div class="bg-red-500 bg-opacity-70 border border-red-400 text-white px-4 py-3 rounded relative mb-4 text-center text-sm shadow-md"
+            role="alert">
+            <span class="block sm:inline">{{ message }}</span>
+        </div>
+        {% endfor %}
+        {% endif %}
+        {% endwith %}
+
+        <form method="POST" action="{{ url_for('auth.login') }}">
+            <div class="mb-6 relative">
+                <input
+                    class="w-full bg-white bg-opacity-20 border border-gray-300 border-opacity-30 rounded-lg py-3 px-4 text-white placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-purple-400 focus:bg-opacity-30 transition-all font-medium"
+                    id="username" name="username" type="text" placeholder="Username">
+            </div>
+            <div class="mb-8 relative">
+                <input
+                    class="w-full bg-white bg-opacity-20 border border-gray-300 border-opacity-30 rounded-lg py-3 px-4 text-white placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-purple-400 focus:bg-opacity-30 transition-all font-medium"
+                    id="password" name="password" type="password" placeholder="Password">
+            </div>
+            <div class="flex items-center justify-between">
+                <button
+                    class="w-full bg-gradient-to-r from-purple-500 to-indigo-600 hover:from-purple-600 hover:to-indigo-700 text-white font-bold py-3 px-4 rounded-lg focus:outline-none focus:shadow-outline shadow-lg transform active:scale-95 transition-all duration-200"
+                    type="submit">
+                    Sign In Let's Go
+                </button>
+            </div>
+        </form>
+    </div>
+</body>
+
+</html>
